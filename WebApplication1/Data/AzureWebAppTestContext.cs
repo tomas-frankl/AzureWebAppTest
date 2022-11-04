@@ -15,7 +15,7 @@ namespace AzureWebAppTest.Data
         // For more information refer to the documentation:
         // http://msdn.microsoft.com/en-us/data/jj591621.aspx
     
-        public AzureWebAppTestContext() : base("name=MYSQL_azurewebapptest")
+        public AzureWebAppTestContext() : base("name=MYSQLCONNSTR_localdb")
         {
         }
 
