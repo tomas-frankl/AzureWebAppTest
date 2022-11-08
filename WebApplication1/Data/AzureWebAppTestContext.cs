@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using MySql.Data.EntityFramework;
 using System.Linq;
 using System.Web;
@@ -19,6 +20,9 @@ namespace AzureWebAppTest.Data
     
         public AzureWebAppTestContext() : base("name=MYSQLCONNSTR_localdb")
         {
+            var log = $"ConnectionString: {this.Database.Connection.ConnectionString}";
+            Console.WriteLine(log);
+            Trace.WriteLine(log);
         }
 
         public System.Data.Entity.DbSet<AzureWebAppTest.Models.Poi> Pois { get; set; }
