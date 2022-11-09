@@ -1,0 +1,4 @@
+﻿\connect admin@localhost
+\use AzureWebAppTest
+\sql
+select * from pois;

@@ -23,7 +23,12 @@ namespace AzureWebAppTest.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
+        public int Altitude { get; set; }
+        public float Latitude { get; set; }
+        public float Longitude { get; set; }
         public Category Category { get; set; }
         public string CountryCode { get; set; }
+
+        public string AddedBy { get; set; }
     }
 }

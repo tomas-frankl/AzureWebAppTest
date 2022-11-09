@@ -11,6 +11,7 @@ using AzureWebAppTest.Models;
 
 namespace AzureWebAppTest.Controllers
 {
+    [HandleError(View = "Error")]
     public class PoisController : Controller
     {
         private AzureWebAppTestContext db = new AzureWebAppTestContext();
@@ -54,10 +55,11 @@ namespace AzureWebAppTest.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Category,CountryCode")] Poi poi)
+        public ActionResult Create([Bind(Include = "Id,Name,Altitude,Latitude,Longitude,Category,CountryCode")] Poi poi)
         {
             if (ModelState.IsValid)
             {
+                poi.AddedBy = this.User.Identity.Name;
                 db.Pois.Add(poi);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -78,6 +80,13 @@ namespace AzureWebAppTest.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (poi.AddedBy != this.User.Identity.Name)
+            {
+                var msg = $"Modification is only allowed to user '{poi.AddedBy}'";
+                throw new Exception(msg);
+            }
+
             return View(poi);
         }
 
@@ -86,7 +95,7 @@ namespace AzureWebAppTest.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Category,CountryCode")] Poi poi)
+        public ActionResult Edit([Bind(Include = "Id,Name,Altitude,Latitude,Longitude,Category,CountryCode,AddedBy")] Poi poi)
         {
             if (ModelState.IsValid)
             {
@@ -109,6 +118,13 @@ namespace AzureWebAppTest.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (poi.AddedBy != this.User.Identity.Name)
+            {
+                var msg = $"Deleting is only allowed to user '{poi.AddedBy}'";
+                throw new Exception(msg);
+            }
+
             return View(poi);
         }
 
