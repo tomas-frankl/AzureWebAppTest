@@ -19,6 +19,9 @@ namespace AzureWebAppTest.Controllers
         // GET: Pois
         public ActionResult Index(string sortOrder, string searchString)
         {
+            ViewBag.CurrentFilter = searchString;
+            ViewBag.CurrentSort = sortOrder;
+
             ViewBag.NameSortParam = sortOrder == "name_asc" ? "name_desc" : "name_asc";
             ViewBag.AltitudeSortParam = sortOrder == "altitude_asc" ? "altitude_desc" : "altitude_asc";
             ViewBag.CategorySortParam = sortOrder == "category_asc" ? "category_desc" : "category_asc"; 

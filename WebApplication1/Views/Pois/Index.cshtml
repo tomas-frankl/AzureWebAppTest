@@ -11,10 +11,62 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
-@using (Html.BeginForm())
+
+@{string nameSign = "";}
+@{string altitudeSign = "";}
+@{string countrySign = "";}
+@{string categorySign = "";}
+@{string addedbySign = "";}
+
+<p>
+    <b>SortBy: </b>
+    @{
+        switch (ViewBag.CurrentSort)
+        {
+            case "name_asc":
+                nameSign = "↑";
+                <text>Name ↑</text>
+                break;
+            case "name_desc":
+                nameSign = "↓";
+                <text>Name ↓</text>
+                break;
+            case "altitude_asc":
+                altitudeSign = "↑";
+                break;
+            case "altitude_desc":
+                altitudeSign = "↓";
+                break;
+            case "category_asc":
+                categorySign = "↑";
+                break;
+            case "category_desc":
+                categorySign = "↓";
+                break;
+            case "country_asc":
+                countrySign = "↑";
+                break;
+            case "country_desc":
+                countrySign = "↓";
+                break;
+            case "addedby_asc":
+                addedbySign = "↑";
+                break;
+            case "addedby_desc":
+                addedbySign = "↓";
+                break;
+            default:
+                <text>undefined</text>
+                break;
+        }
+        <br />
+    }
+</p>
+
+@using (Html.BeginForm("Index", "Pois", FormMethod.Get))
 {
     <p>
-        Find by name: @Html.TextBox("searchString")
+        Find by name: @Html.TextBox("searchString", ViewBag.CurrentFilter as string)
         <input type="submit" value="Search" />
     </p>
 }
@@ -23,25 +75,30 @@
     <tr>
         <th>
             @Html.ActionLink(Html.DisplayNameFor(model => model.Name).ToHtmlString(),
-                "Index", new { sortOrder = ViewBag.NameSortParam })
+                "Index", new { sortOrder = ViewBag.NameSortParam, searchString = ViewBag.CurrentFilter })
+            @nameSign
         </th>
         <th>
             @Html.ActionLink(Html.DisplayNameFor(model => model.Altitude).ToHtmlString(),
-                "Index", new { sortOrder = ViewBag.AltitudeSortParam })
+                "Index", new { sortOrder = ViewBag.AltitudeSortParam, searchString = ViewBag.CurrentFilter })
+            @altitudeSign
         </th>
         <th>
             @Html.ActionLink(Html.DisplayNameFor(model => model.Category).ToHtmlString(),
-                "Index", new { sortOrder = ViewBag.CategorySortParam })
+                "Index", new { sortOrder = ViewBag.CategorySortParam, searchString = ViewBag.CurrentFilter })
+            @categorySign
         </th>
         <th>
             @Html.ActionLink(
                 Html.DisplayNameFor(model => model.CountryCode).ToHtmlString(),
-                "Index", new { sortOrder = ViewBag.CountrySortParam })
+                "Index", new { sortOrder = ViewBag.CountrySortParam, searchString = ViewBag.CurrentFilter })
+            @countrySign
         </th>
         <th>
             @Html.ActionLink(
                 Html.DisplayNameFor(model => model.AddedBy).ToHtmlString(),
-                "Index", new { sortOrder = ViewBag.AddedBySortParam })
+                "Index", new { sortOrder = ViewBag.AddedBySortParam, searchString = ViewBag.CurrentFilter })
+            @addedbySign
         </th>
         <th></th>
     </tr>
