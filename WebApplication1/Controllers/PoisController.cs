@@ -17,10 +17,11 @@ namespace AzureWebAppTest.Controllers
         private AzureWebAppTestContext db = new AzureWebAppTestContext();
 
         // GET: Pois
-        public ActionResult Index(string sortOrder, string searchString)
+        public ActionResult Index(string sortOrder, string searchString, bool myPointsOnly = false)
         {
             ViewBag.CurrentFilter = searchString;
             ViewBag.CurrentSort = sortOrder;
+            ViewBag.MyPointsOnly = myPointsOnly;
 
             ViewBag.NameSortParam = sortOrder == "name_asc" ? "name_desc" : "name_asc";
             ViewBag.AltitudeSortParam = sortOrder == "altitude_asc" ? "altitude_desc" : "altitude_asc";
@@ -37,6 +38,11 @@ namespace AzureWebAppTest.Controllers
             if (!String.IsNullOrEmpty(searchString))
             {
                 pois = pois.Where(p => p.Name.ToLower().Contains(searchString.ToLower()));
+            }
+
+            if (myPointsOnly)
+            {
+                pois = pois.Where(p => p.AddedBy == this.User.Identity.Name);
             }
 
             switch (sortOrder)

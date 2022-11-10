@@ -5,6 +5,21 @@
     ViewBag.Title = "Index";
 }
 
+<style>
+    .filter-box {
+        background-color: #EBEBEB;
+        border-style: groove;
+        border-width: 5px;
+        margin-bottom: 30px;        
+        padding: 10px;
+    }
+    .my-check-box {
+        width: 20px;
+        height: 20px;
+    }
+    
+</style>
+
 <h2>Index</h2>
 
 <p>
@@ -63,41 +78,56 @@
     }
 </p>
 
+@{
+    var checkboxAttributes = ViewBag.MyPointsOnly ?
+        (object)new { @class = "my-check-box", @checked = "checked" } :
+        (object)new { @class = "my-check-box" };
+}
+
 @using (Html.BeginForm("Index", "Pois", FormMethod.Get))
 {
-    <p>
-        Find by name: @Html.TextBox("searchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
-    </p>
+    <div class="filter-box">
+        <p>
+        <div>
+            <label>Find by name: @Html.TextBox("searchString", ViewBag.CurrentFilter as string)</label>
+        </div>
+        <div>
+            <label>Show only my points: @Html.CheckBox("myPointsOnly", checkboxAttributes)</label>
+        </div>
+
+        <p align="right">
+            <input type="submit" value="Search" />
+        </p>
+    </div>
 }
+
+
 
 <table class="table">
     <tr>
         <th>
             @Html.ActionLink(Html.DisplayNameFor(model => model.Name).ToHtmlString(),
-                "Index", new { sortOrder = ViewBag.NameSortParam, searchString = ViewBag.CurrentFilter })
+                "Index", new { sortOrder = ViewBag.NameSortParam, searchString = ViewBag.CurrentFilter, ViewBag.MyPointsOnly })
             @nameSign
         </th>
         <th>
             @Html.ActionLink(Html.DisplayNameFor(model => model.Altitude).ToHtmlString(),
-                "Index", new { sortOrder = ViewBag.AltitudeSortParam, searchString = ViewBag.CurrentFilter })
+                "Index", new { sortOrder = ViewBag.AltitudeSortParam, searchString = ViewBag.CurrentFilter, ViewBag.MyPointsOnly })
             @altitudeSign
         </th>
         <th>
             @Html.ActionLink(Html.DisplayNameFor(model => model.Category).ToHtmlString(),
-                "Index", new { sortOrder = ViewBag.CategorySortParam, searchString = ViewBag.CurrentFilter })
+                "Index", new { sortOrder = ViewBag.CategorySortParam, searchString = ViewBag.CurrentFilter, ViewBag.MyPointsOnly })
             @categorySign
         </th>
         <th>
-            @Html.ActionLink(
-                Html.DisplayNameFor(model => model.CountryCode).ToHtmlString(),
-                "Index", new { sortOrder = ViewBag.CountrySortParam, searchString = ViewBag.CurrentFilter })
+            @Html.ActionLink(Html.DisplayNameFor(model => model.CountryCode).ToHtmlString(),
+                "Index", new { sortOrder = ViewBag.CountrySortParam, searchString = ViewBag.CurrentFilter, ViewBag.MyPointsOnly })
             @countrySign
         </th>
         <th>
-            @Html.ActionLink(
-                Html.DisplayNameFor(model => model.AddedBy).ToHtmlString(),
-                "Index", new { sortOrder = ViewBag.AddedBySortParam, searchString = ViewBag.CurrentFilter })
+            @Html.ActionLink(Html.DisplayNameFor(model => model.AddedBy).ToHtmlString(),
+                "Index", new { sortOrder = ViewBag.AddedBySortParam, searchString = ViewBag.CurrentFilter, ViewBag.MyPointsOnly })
             @addedbySign
         </th>
         <th></th>
