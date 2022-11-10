@@ -17,7 +17,7 @@ namespace AzureWebAppTest.Controllers
         private AzureWebAppTestContext db = new AzureWebAppTestContext();
 
         // GET: Pois
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortOrder, string searchString)
         {
             ViewData["NameSortParam"] = sortOrder == "name_asc" ? "name_desc" : "name_asc";
             ViewData["AltitudeSortParam"] = sortOrder == "altitude_asc" ? "altitude_desc" : "altitude_asc";
@@ -31,6 +31,11 @@ namespace AzureWebAppTest.Controllers
                 new Poi() { Id = 1, Category = Category.Peaks, CountryCode = "CZ", Name = "Lysa hora" },
                 new Poi() { Id = 2, Category = Category.Peaks, CountryCode = "SK", Name = "Gerlachovsky stit" }
             };*/
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                pois = pois.Where(p => p.Name.ToLower().Contains(searchString.ToLower()));
+            }
+
             switch (sortOrder)
             {
                 case "name_desc":
