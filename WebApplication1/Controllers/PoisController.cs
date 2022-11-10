@@ -17,14 +17,54 @@ namespace AzureWebAppTest.Controllers
         private AzureWebAppTestContext db = new AzureWebAppTestContext();
 
         // GET: Pois
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
-            var pois = db.Pois.ToList();
+            ViewData["NameSortParam"] = sortOrder == "name_asc" ? "name_desc" : "name_asc";
+            ViewData["AltitudeSortParam"] = sortOrder == "altitude_asc" ? "altitude_desc" : "altitude_asc";
+            ViewData["CategorySortParam"] = sortOrder == "category_asc" ? "category_desc" : "category_asc"; 
+            ViewData["CountrySortParam"] = sortOrder == "country_asc" ? "country_desc" : "country_asc";
+            ViewData["AddedBySortParam"] = sortOrder == "addedby_asc" ? "addedby_desc" : "addedby_asc";
+
+            var pois = db.Pois.AsEnumerable();
             /*var pois = new List<Poi>()
             {
                 new Poi() { Id = 1, Category = Category.Peaks, CountryCode = "CZ", Name = "Lysa hora" },
                 new Poi() { Id = 2, Category = Category.Peaks, CountryCode = "SK", Name = "Gerlachovsky stit" }
             };*/
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    pois = pois.OrderByDescending(p => p.Name);
+                    break;
+                case "name_asc":
+                    pois = pois.OrderBy(p => p.Name);
+                    break;
+                case "altitude_desc":
+                    pois = pois.OrderByDescending(p => p.Altitude);
+                    break;
+                case "altitude_asc":
+                    pois = pois.OrderBy(p => p.Altitude);
+                    break;
+                case "category_desc":
+                    pois = pois.OrderByDescending(p => p.Category);
+                    break;
+                case "category_asc":
+                    pois = pois.OrderBy(p => p.Category);
+                    break;
+                case "country_desc":
+                    pois = pois.OrderByDescending(p => p.CountryCode);
+                    break;
+                case "country_asc":
+                    pois = pois.OrderBy(p => p.CountryCode);
+                    break;
+                case "addedby_desc":
+                    pois = pois.OrderByDescending(p => p.AddedBy);
+                    break;
+                case "addedby_asc":
+                    pois = pois.OrderBy(p => p.AddedBy);
+                    break;
+            }
+
             return View(pois);
         }
 

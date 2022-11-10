@@ -1,4 +1,5 @@
-﻿@model IEnumerable<AzureWebAppTest.Models.Poi>
+﻿@using System.Web.UI.WebControls
+@model IEnumerable<AzureWebAppTest.Models.Poi>
 
 @{
     ViewBag.Title = "Index";
@@ -12,16 +13,26 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.ActionLink(Html.DisplayNameFor(model => model.Name).ToHtmlString(),
+                "Index", new { sortOrder = ViewBag.NameSortParam })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Category)
+            @Html.ActionLink(Html.DisplayNameFor(model => model.Altitude).ToHtmlString(),
+                "Index", new { sortOrder = ViewBag.AltitudeSortParam })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CountryCode)
+            @Html.ActionLink(Html.DisplayNameFor(model => model.Category).ToHtmlString(),
+                "Index", new { sortOrder = ViewBag.CategorySortParam })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AddedBy)
+            @Html.ActionLink(
+                Html.DisplayNameFor(model => model.CountryCode).ToHtmlString(),
+                "Index", new { sortOrder = ViewBag.CountrySortParam })
+        </th>
+        <th>
+            @Html.ActionLink(
+                Html.DisplayNameFor(model => model.AddedBy).ToHtmlString(),
+                "Index", new { sortOrder = ViewBag.AddedBySortParam })
         </th>
         <th></th>
     </tr>
@@ -30,6 +41,9 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Altitude)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Category)
