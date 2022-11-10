@@ -19,11 +19,11 @@ namespace AzureWebAppTest.Controllers
         // GET: Pois
         public ActionResult Index(string sortOrder, string searchString)
         {
-            ViewData["NameSortParam"] = sortOrder == "name_asc" ? "name_desc" : "name_asc";
-            ViewData["AltitudeSortParam"] = sortOrder == "altitude_asc" ? "altitude_desc" : "altitude_asc";
-            ViewData["CategorySortParam"] = sortOrder == "category_asc" ? "category_desc" : "category_asc"; 
-            ViewData["CountrySortParam"] = sortOrder == "country_asc" ? "country_desc" : "country_asc";
-            ViewData["AddedBySortParam"] = sortOrder == "addedby_asc" ? "addedby_desc" : "addedby_asc";
+            ViewBag.NameSortParam = sortOrder == "name_asc" ? "name_desc" : "name_asc";
+            ViewBag.AltitudeSortParam = sortOrder == "altitude_asc" ? "altitude_desc" : "altitude_asc";
+            ViewBag.CategorySortParam = sortOrder == "category_asc" ? "category_desc" : "category_asc"; 
+            ViewBag.CountrySortParam = sortOrder == "country_asc" ? "country_desc" : "country_asc";
+            ViewBag.AddedBySortParam = sortOrder == "addedby_asc" ? "addedby_desc" : "addedby_asc";
 
             var pois = db.Pois.AsEnumerable();
             /*var pois = new List<Poi>()
